@@ -9,6 +9,10 @@ set directory=$HOME/vimbackup
 set hidden
 "Vi互換をオフ
 set nocompatible
+"UTF-8
+set fileencoding=utf-8
+set termencoding=utf-8
+set encoding=utf-8
 
 
 "タブセット===================================
