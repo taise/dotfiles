@@ -23,8 +23,11 @@ hardstatus string "%?%h%:%t%?"
 termcapinfo xterm*|screen* hs:ts=\E]0;:fs=\007:ds=\E]0;\007
 hardstatus on
 
+# start current directory
+#chdir $PWD
+
 # caption
-caption always "%{=r dd}%`%-w%{+b WK}%n %t%{-}%+w %= [%02c]"
+caption always "%{=r dd}%`%-w%{+b WK}%n %t%{-}%+w %= [%{=b wb}%y/%m/%d(%D) %02c]"
 sorendition "+rb .G"
 
 # disable xoff

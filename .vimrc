@@ -72,8 +72,8 @@ inoremap <C-l> <RIGHT>
 inoremap <C-e> <End>
 "挿入モードでカーソル上の文字をデリート
 inoremap <C-d> <Del>
-"vspの画面分割で左右画面を入れ替える
-nnoremap <C-l> <C-w>L
+"vspの画面分割で左右画面を入れ替える => 誤動作が多い...
+"nnoremap <C-l> <C-w>L
 
 "4HTML=======================================
 inoremap <div <div><CR></div><UP>
