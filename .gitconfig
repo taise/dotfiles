@@ -1,0 +1,16 @@
+[user]
+  name = taise
+  email = taise515@gmail.com
+[github]
+  user = taise
+[color]
+  ui = true
+[push]
+  default = matching
+[alias]
+    s  = status
+    a  = add
+    b  = branch
+    d  = diff
+    cm = commit
+    co = checkout

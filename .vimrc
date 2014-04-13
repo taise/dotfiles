@@ -12,6 +12,7 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc.vim'
 
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplcache.vim'
 "NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'nathanaelkane/vim-indent-guides'
@@ -37,6 +38,9 @@ NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'jiangmiao/simple-javascript-indenter'
 NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'teramako/jscomplete-vim'
+
+" for Julia
+NeoBundle 'JuliaLang/julia-vim'
 
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
 
