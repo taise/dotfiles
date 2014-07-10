@@ -14,3 +14,4 @@
     d  = diff
     cm = commit
     co = checkout
+    l  = log --decorate --graph --oneline

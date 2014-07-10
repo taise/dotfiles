@@ -37,6 +37,13 @@ plugins=(rails ruby git)
 
 export LANG=en_US.UTF-8
 source $ZSH/oh-my-zsh.sh
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# for homebrew
+export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/sbin:$PATH
 
 # Customize to your needs...
 export LSCOLORS=gxfxcxdxbxegedabagacad
@@ -48,7 +55,7 @@ alias musicmuit='cd /Users/taise/development/ruby/rails_apps/musicmuit'
 
 # for Ruby
 [ -s "$HOME/.rvm/scripts/rvm" ] && . "$HOME/.rvm/scripts/rvm"
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 alias r='rails'
 alias rspec='rspec --color'
 alias rspecf='rspec --color --format doc'
@@ -59,6 +66,9 @@ alias gi='gem install --no-ri --no-rdoc'
 # for MySQL
 MYSQL=/usr/local/mysql/bin
 PATH=$PATH:$MYSQL
+
+# for Apache
+export PATH=/usr/local/Cellar/httpd/2.2.27/sbin:$PATH
 
 #for PostgreSQL
 export PGDATA=/usr/local/var/postgres
@@ -78,4 +88,13 @@ export PATH=$PATH:/Applications/Julia-0.2.1.app/Contents/Resources/julia/bin
 export PATH=$PATH:/usr/local/lib/python3.3/site-packages
 
 # for Scala
-export SPARK_HOME='/Users/taise/development/scala/spark-0.9.1'
+export SPARK_HOME='/usr/local/spark/spark-0.9.1'
+export SBT_OPTS='-Xms512M -Xmx3072M -Xss256M -XX:MaxNewSize1024M -XX:+CMSClassUnloadingEnabled -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+CMSIncrementalMode  -XX:+UseConcMarkSweepGC -XX:PermSize=724M -XX:MaxPermSize=724M'
+
+# for Python
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+
+# for peco
+alias o='vim $(git ls-files | peco)'
+

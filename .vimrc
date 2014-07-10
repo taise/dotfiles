@@ -41,16 +41,26 @@ NeoBundle 'teramako/jscomplete-vim'
 " for Julia
 NeoBundle 'JuliaLang/julia-vim'
 
+" for Python
+let $PATH = "~/.pyenv/shims:".$PATH"
+NeoBundleLazy "lambdalisue/vim-pyenv", {
+      \ "autoload": {
+      \   "filetypes": ["python", "python3", "djangohtml"]
+      \ }}
+
+" for Markdown
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
+
 
 filetype plugin indent on
 filetype indent on
 syntax on
 
+
 "backup
-set backupdir=$HOME/vimbackup
-set browsedir=buffer
-set directory=$HOME/vimbackup
+set nowritebackup
+set nobackup
+set noswapfile
 set hidden
 
 "UTF-8
@@ -61,7 +71,6 @@ set encoding=utf-8
 "show invisibility mark
 set list
 set listchars=eol:$,tab:>\ ,extends:<
-set number
 
 "syntax hilight
 set background=dark
@@ -76,19 +85,27 @@ set shiftwidth=2
 set expandtab
 set nowrap
 set whichwrap=b,s,h,l,<,>,[,]
+
+"decorate
+set number
+""set colorcolumn=80
 set showmatch
+set matchpairs& matchpairs+=<:>
+set cursorline
 
 "search
 set smartcase
 set nowrapscan
 set incsearch
 set hlsearch
-
+nmap <silent> <Esc><Esc> :nohlsearch<CR>
 
 "indent
 set smartindent
 set autoindent
 
+"select
+vnoremap v $h
 
 inoremap <C-[> <ESC>
 inoremap " ""<LEFT>
@@ -111,6 +128,8 @@ nnoremap L $
 inoremap <C-e> <End>
 inoremap <C-d> <Del>
 
+"useful backspace
+set backspace=indent,eol,start
 
 "input erb keybind
 inoremap <C-F> <% %><LEFT><LEFT><LEFT>
@@ -214,3 +233,4 @@ endfunction
 function! MyMode()
   return winwidth(0) > 50 ? lightline#mode() : ''
 endfunction
+
