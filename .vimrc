@@ -10,7 +10,14 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 
 " originalrepos on github
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc.vim'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
 
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplcache.vim'
@@ -36,7 +43,7 @@ NeoBundle 'derekwyatt/vim-scala'
 " for JavaScript
 NeoBundle 'jiangmiao/simple-javascript-indenter'
 NeoBundle 'jelera/vim-javascript-syntax'
-NeoBundle 'teramako/jscomplete-vim'
+"NeoBundle 'teramako/jscomplete-vim'
 
 " for Julia
 NeoBundle 'JuliaLang/julia-vim'
@@ -55,7 +62,8 @@ NeoBundle 'joker1007/vim-markdown-quote-syntax'
 filetype plugin indent on
 filetype indent on
 syntax on
-
+set visualbell t_vb=
+set noerrorbells
 
 "backup
 set nowritebackup
@@ -107,6 +115,7 @@ set autoindent
 "select
 vnoremap v $h
 
+"custom key binds
 inoremap <C-[> <ESC>
 inoremap " ""<LEFT>
 inoremap ' ''<LEFT>
