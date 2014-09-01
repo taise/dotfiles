@@ -43,6 +43,7 @@ NeoBundle 'derekwyatt/vim-scala'
 " for JavaScript
 NeoBundle 'jiangmiao/simple-javascript-indenter'
 NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'kchmck/vim-coffee-script'
 "NeoBundle 'teramako/jscomplete-vim'
 
 " for Julia
