@@ -82,14 +82,18 @@ PATH=$PATH:/usr/local/share/npm/bin
 #cat /Users/taise/Documents/todo.txt
 
 # for Julia
-export PATH=$PATH:/Applications/Julia-0.2.1.app/Contents/Resources/julia/bin
+export PATH=$PATH:/Applications/Julia-0.3.0.app/Contents/Resources/julia/bin
 
 # for python
 export PATH=$PATH:/usr/local/lib/python3.3/site-packages
 
 # for Scala
 export SPARK_HOME='/usr/local/spark/spark-0.9.1'
-export SBT_OPTS='-Xms512M -Xmx3072M -Xss256M -XX:MaxNewSize1024M -XX:+CMSClassUnloadingEnabled -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+CMSIncrementalMode  -XX:+UseConcMarkSweepGC -XX:PermSize=724M -XX:MaxPermSize=724M'
+#export SBT_OPTS='-Xms512M -Xmx3072M -Xss256M -XX:+CMSClassUnloadingEnabled -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+CMSIncrementalMode  -XX:+UseConcMarkSweepGC -XX:PermSize=724M -XX:MaxPermSize=724M'
+export SBT_OPTS='-Xms512M -Xmx3072M -Xss256M -XX:+UseParNewGC -XX:+UseConcMarkSweepGC'
+
+# for PlayFramework
+alias a='activator'
 
 # for Python
 export PATH="$HOME/.pyenv/bin:$PATH"
