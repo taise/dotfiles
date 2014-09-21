@@ -26,6 +26,7 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'vim-scripts/opsplorer'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'scrooloose/syntastic'
 
 " for Git
 NeoBundle 'tpope/vim-fugitive'
@@ -58,6 +59,8 @@ NeoBundleLazy "lambdalisue/vim-pyenv", {
 
 " for Markdown
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
+" for Dictionary
+NeoBundle 'modsound/macdict-vim'
 
 
 filetype plugin indent on
@@ -181,7 +184,8 @@ let java_highlight_all=1
 "Vim command
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
-
+" SyntasticCheck
+let g:syntastic_ruby_checkers = ['rubocop']
 
 " set lightline
 let g:lightline = {
