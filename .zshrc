@@ -7,7 +7,7 @@ ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="agnoster"
 ZSH_THEME="cloud"
 
-DEFAULT_USER="user@hostname"
+DEFAULT_USER="taise515@gmail.com"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -33,7 +33,8 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(rails ruby git)
+plugins=(rails ruby git zsh-syntax-highlighting zsh-notify)
+setopt nolistbeep
 
 export LANG=en_US.UTF-8
 source $ZSH/oh-my-zsh.sh
@@ -51,11 +52,22 @@ alias ls='ls -G'
 alias today='mkdir `date +"%Y%m%d"`'
 #export SCREENDIR="/Users/taise/.screen"
 alias vim='/usr/local/bin/vim'
-alias musicmuit='cd /Users/taise/development/ruby/rails_apps/musicmuit'
+
+# notify
+REPORTTIME=3
+
+# Anyenv
+export PATH=$HOME/.anyenv/env/rbenv/bin:$PATH
+eval "$(rbenv init - zsh)"
+
+
+# for Perl
+PERL_MB_OPT="--install_base \"/Users/taise/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/taise/perl5"; export PERL_MM_OPT;
 
 # for Ruby
-[ -s "$HOME/.rvm/scripts/rvm" ] && . "$HOME/.rvm/scripts/rvm"
-PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
+export PATH=$HOME/.rbenv/bin:$PATH
+eval "$(rbenv init - zsh)"
 alias r='rails'
 alias rspec='rspec --color'
 alias rspecf='rspec --color --format doc'
@@ -77,26 +89,25 @@ alias ps_stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias ps_status='pg_ctl -D /usr/local/var/postgres status'
 
 #for JavaScript
-PATH=$PATH:/usr/local/share/npm/bin
+export PATH=$PATH:/usr/local/share/npm/bin
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
 
 #cat /Users/taise/Documents/todo.txt
 
 # for Julia
 export PATH=$PATH:/Applications/Julia-0.3.0.app/Contents/Resources/julia/bin
 
-# for python
-export PATH=$PATH:/usr/local/lib/python3.3/site-packages
-
 # for Scala
-export SPARK_HOME='/usr/local/spark/spark-0.9.1'
-#export SBT_OPTS='-Xms512M -Xmx3072M -Xss256M -XX:+CMSClassUnloadingEnabled -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+CMSIncrementalMode  -XX:+UseConcMarkSweepGC -XX:PermSize=724M -XX:MaxPermSize=724M'
+export SPARK_HOME='/usr/local/spark/spark-1.1.1'
+PATH="$PATH:$SPARK_HOME/bin"
 export SBT_OPTS='-Xms512M -Xmx3072M -Xss256M -XX:+UseParNewGC -XX:+UseConcMarkSweepGC'
 
 # for PlayFramework
 alias a='activator'
 
 # for Python
-export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/.anyenv/env/pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 
 # for peco
@@ -117,3 +128,4 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
