@@ -24,6 +24,7 @@ NeoBundle 'Shougo/neocomplcache.vim'
 "NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'vim-scripts/opsplorer'
+NeoBundle 'Shougo/vimfiler'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'scrooloose/syntastic'
@@ -56,6 +57,15 @@ NeoBundleLazy "lambdalisue/vim-pyenv", {
       \ "autoload": {
       \   "filetypes": ["python", "python3", "djangohtml"]
       \ }}
+NeoBundleLazy "davidhalter/jedi-vim", {
+      \ "autoload": {
+      \   "filetypes": ["python", "python3", "djangohtml"],
+      \ },
+      \ "build": {
+      \   "mac": "pip install jedi",
+      \   "unix": "pip install jedi",
+      \ }}
+"NeoBundle 'kevinw/pyflakes-vim'
 
 " for Markdown
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
@@ -82,7 +92,9 @@ set encoding=utf-8
 
 "show invisibility mark
 set list
-set listchars=eol:$,tab:>\ ,extends:<
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+"set listchars=eol:$,tab:>\ ,extends:<
+set colorcolumn=80
 
 "syntax hilight
 set background=dark
@@ -106,11 +118,16 @@ set matchpairs& matchpairs+=<:>
 set cursorline
 
 "search
+set ignorecase
 set smartcase
 set nowrapscan
 set incsearch
 set hlsearch
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
+
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
 
 "indent
 set smartindent
@@ -186,6 +203,20 @@ command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | d
 
 " SyntasticCheck
 let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_python_python_exec = '/Users/taise/.pyenv/shims/python3'
+let g:syntastic_mode_map = {
+            \ 'mode': 'active',
+            \ 'passive_filetypes': ['python', 'ruby']
+            \ }
+
+" jedi
+autocmd FileType python setlocal omnifunc=jedi#completions
+autocmd FileType python setlocal completeopt-=preview
+let g:jedi#auto_vim_configuration = 0
+if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
 
 " set lightline
 let g:lightline = {
@@ -248,3 +279,7 @@ function! MyMode()
   return winwidth(0) > 50 ? lightline#mode() : ''
 endfunction
 
+
+" for VimFiler
+nnoremap <silent> ,vf :<C-u>VimFiler -split -simple -winwidth=30 -no-quit<CR>
+let g:vimfiler_as_default_explorer = 1
