@@ -153,7 +153,7 @@ command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | d
 
 " SyntasticCheck
 let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_python_checkers = ['pep8']
 let g:syntastic_mode_map = {
             \ 'mode': 'active',
             \ 'passive_filetypes': ['python', 'ruby']
