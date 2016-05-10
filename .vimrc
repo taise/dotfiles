@@ -1,67 +1,29 @@
-" for neo bundle
-set nocompatible
-filetype off
+call plug#begin('~/.vim/plugged')
 
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/neocomplcache.vim'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'vim-scripts/opsplorer'
+Plug 'Shougo/vimfiler'
+Plug 'thinca/vim-quickrun'
+Plug 'itchyny/lightline.vim'
+Plug 'scrooloose/syntastic'
+Plug 'majutsushi/tagbar'
 
-call neobundle#rc(expand('~/.vim/bundle/'))
-
-" originalrepos on github
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
-
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neocomplcache.vim'
-"NeoBundle 'vim-jp/vimdoc-ja'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'vim-scripts/opsplorer'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'itchyny/lightline.vim'
-
-" for Git
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'gregsexton/gitv'
-
-" for Ruby
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tpope/vim-rails'
-
-NeoBundle 'othree/html5.vim'
-
-NeoBundle 'vim-scripts/javacomplete'
-NeoBundle 'derekwyatt/vim-scala'
-
-" for JavaScript
-NeoBundle 'jiangmiao/simple-javascript-indenter'
-NeoBundle 'jelera/vim-javascript-syntax'
-NeoBundle 'kchmck/vim-coffee-script'
-"NeoBundle 'teramako/jscomplete-vim'
-
-" for Julia
-NeoBundle 'JuliaLang/julia-vim'
-
-" for Python
-let $PATH = "~/.pyenv/shims:".$PATH"
-NeoBundleLazy "lambdalisue/vim-pyenv", {
-      \ "autoload": {
-      \   "filetypes": ["python", "python3", "djangohtml"]
-      \ }}
-
-" for Markdown
-NeoBundle 'joker1007/vim-markdown-quote-syntax'
-
+Plug 'vim-ruby/vim-ruby'
+Plug 'othree/html5.vim'
+Plug 'vim-scripts/javacomplete'
+Plug 'derekwyatt/vim-scala'
+Plug 'jiangmiao/simple-javascript-indenter'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'kchmck/vim-coffee-script'
+Plug 'JuliaLang/julia-vim'
+Plug 'fatih/vim-go'
+Plug 'joker1007/vim-markdown-quote-syntax'
+Plug 'modsound/macdict-vim'
+call plug#end()
 
 filetype plugin indent on
-filetype indent on
 syntax on
 set visualbell t_vb=
 set noerrorbells
@@ -79,7 +41,9 @@ set encoding=utf-8
 
 "show invisibility mark
 set list
-set listchars=eol:$,tab:>\ ,extends:<
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+"set listchars=eol:$,tab:>\ ,extends:<
+set colorcolumn=80
 
 "syntax hilight
 set background=dark
@@ -101,13 +65,19 @@ set number
 set showmatch
 set matchpairs& matchpairs+=<:>
 set cursorline
+set completeopt=menu,preview
 
 "search
+set ignorecase
 set smartcase
 set nowrapscan
 set incsearch
 set hlsearch
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
+
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
 
 "indent
 set smartindent
@@ -152,12 +122,12 @@ nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
+nnoremap <silent> ,uu :<C-u>Unite file buffer<CR>
 
 "QuickRun
 let g:quickrun_config = {}
 " for Rspec
-let g:quickrun_config['ruby.rspec'] = {'command': 'spec'}
+let g:quickrun_config['ruby.rspec'] = {'command': 'bundle exec rspec'}
 augroup UjihisaRSpec
   autocmd!
   autocmd BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
@@ -181,7 +151,13 @@ let java_highlight_all=1
 "Vim command
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
-
+" SyntasticCheck
+let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_mode_map = {
+            \ 'mode': 'active',
+            \ 'passive_filetypes': ['python', 'ruby']
+            \ }
 
 " set lightline
 let g:lightline = {
@@ -199,8 +175,8 @@ let g:lightline = {
       \   'fileencoding': 'MyFileencoding',
       \   'mode': 'MyMode',
       \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ 'separator': { 'left': '＞', 'right': '＜' },
+      \ 'subseparator': { 'left': '>', 'right': '<' }
       \ }
 
 function! MyModified()
@@ -208,7 +184,7 @@ function! MyModified()
 endfunction
 
 function! MyReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '🔒' : ''
 endfunction
 
 function! MyFilename()
@@ -223,7 +199,7 @@ endfunction
 function! MyFugitive()
   if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
     let _ = fugitive#head()
-    return strlen(_) ? '⭠ '._ : ''
+    return strlen(_) ? '@'._ : ''
   endif
   return ''
 endfunction
@@ -244,3 +220,50 @@ function! MyMode()
   return winwidth(0) > 50 ? lightline#mode() : ''
 endfunction
 
+
+" for VimFiler
+nnoremap <silent> ,vf :<C-u>VimFiler -split -simple -winwidth=30 -no-quit<CR>
+let g:vimfiler_as_default_explorer = 1
+
+" for Tagbar
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
+let g:tagbar_type_ruby = {
+    \ 'kinds' : [
+        \ 'm:modules',
+        \ 'c:classes',
+        \ 'd:describes',
+        \ 'C:contexts',
+        \ 'f:methods',
+        \ 'F:singleton methods'
+    \ ]
+\ }
+
+nmap <C-_> :TagbarToggle<CR>
+nmap <C-p> :set paste<CR>
