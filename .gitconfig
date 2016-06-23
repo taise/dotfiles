@@ -8,10 +8,20 @@
 [push]
   default = matching
 [alias]
-    s  = status
-    a  = add
-    b  = branch
-    d  = diff
-    cm = commit
-    co = checkout
-    l  = log --decorate --graph --oneline
+  s  = status
+  a  = add
+  b  = branch
+  d  = diff --color
+  dh = diff --color HEAD
+  cm = commit
+  co = checkout
+  l  = log --decorate --graph --oneline
+  create-pull-request = !sh -c 'stash pull-request $0 $@'
+  fp =  fetch --prune
+[core]
+  whitespace = cr-at-eol
+  editor = vim
+[pager]
+  log  = diff-highlight | less
+  diff = diff-highlight | less
+  show = diff-highlight | less
