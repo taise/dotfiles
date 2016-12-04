@@ -3,25 +3,35 @@
   email = taise515@gmail.com
 [github]
   user = taise
+[core]
+  whitespace = cr-at-eol
+  editor = vim
+  autocrlf = input
+  pager = diff-highlight | less
 [color]
-  ui = true
+  ui = always
+[color "diff"]
+  commit = green
+  meta = yellow
+  frag = cyan
+  old = red
+  new = green
+  whitespace = red reverse
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
 [push]
   default = matching
 [alias]
   s  = status
   a  = add
   b  = branch
-  d  = diff --color
-  dh = diff --color HEAD
+  d  = diff
+  dh = diff HEAD
   cm = commit
   co = checkout
   l  = log --decorate --graph --oneline
   create-pull-request = !sh -c 'stash pull-request $0 $@'
   fp =  fetch --prune
-[core]
-  whitespace = cr-at-eol
-  editor = vim
-[pager]
-  log  = diff-highlight | less
-  diff = diff-highlight | less
-  show = diff-highlight | less
