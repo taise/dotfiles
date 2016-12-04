@@ -6,8 +6,9 @@ ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="robbyrussell"
 #ZSH_THEME="agnoster"
 ZSH_THEME="cloud"
+TERM=xterm-256color
 
-DEFAULT_USER="user@hostname"
+DEFAULT_USER="taise"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -15,11 +16,15 @@ DEFAULT_USER="user@hostname"
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
 
+LANG=en_US.UTF-8
+LC_CTYPE=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+
 # Comment this out to disable bi-weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment to change how many often would you like to wait before auto-updates occur? (in days)
-# export UPDATE_ZSH_DAYS=13
+UPDATE_ZSH_DAYS=3
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
@@ -30,45 +35,48 @@ DEFAULT_USER="user@hostname"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
+# For zsh-completions
+# fpath=(/usr/local/share/zsh-completions $fpath)
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(rails ruby git)
+plugins=(rails ruby rake git emoji-clock zsh-syntax-highlighting docker aws
+         brew bundler gem golang pep8 pip python tmux vagrant)
 
-export LANG=en_US.UTF-8
 source $ZSH/oh-my-zsh.sh
-if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
+#if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+#  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#fi
+
+# git
+alias gmergedrm="git branch --merged | grep -v '*' | xargs -I % git branch -d %"
+export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 
 # for homebrew
-export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/sbin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 # Customize to your needs...
 export LSCOLORS=gxfxcxdxbxegedabagacad
 alias ls='ls -G'
 alias today='mkdir `date +"%Y%m%d"`'
-#export SCREENDIR="/Users/taise/.screen"
-alias vim='/usr/local/bin/vim'
-alias musicmuit='cd /Users/taise/development/ruby/rails_apps/musicmuit'
+alias todaymd='touch `date +"%Y%m%d.md"`'
 
 # for Ruby
-[ -s "$HOME/.rvm/scripts/rvm" ] && . "$HOME/.rvm/scripts/rvm"
-PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
 alias r='rails'
 alias rspec='rspec --color'
 alias rspecf='rspec --color --format doc'
 alias be='bundle exec'
+alias bers='bundle exec rspec -c -f d'
 alias bi='bundle install'
 alias gi='gem install --no-ri --no-rdoc'
 
 # for MySQL
-MYSQL=/usr/local/mysql/bin
-PATH=$PATH:$MYSQL
-
-# for Apache
-export PATH=/usr/local/Cellar/httpd/2.2.27/sbin:$PATH
+export MYSQL=/usr/local/mysql/bin
+export PATH=$PATH:$MYSQL
 
 #for PostgreSQL
 export PGDATA=/usr/local/var/postgres
@@ -77,27 +85,22 @@ alias ps_stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 alias ps_status='pg_ctl -D /usr/local/var/postgres status'
 
 #for JavaScript
-PATH=$PATH:/usr/local/share/npm/bin
+export PATH=$HOME/.nodebrew/current/bin:$PATH
 
-#cat /Users/taise/Documents/todo.txt
-
-# for Julia
-export PATH=$PATH:/Applications/Julia-0.3.0.app/Contents/Resources/julia/bin
+# for Java
+alias java='/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java'
 
 # for python
-export PATH=$PATH:/usr/local/lib/python3.3/site-packages
+export PATH="$HOME/.pyenv/shims:$PATH"
+eval "$(pyenv init -)"
+
+# for perl
+# eval "$(plenv init -)"
 
 # for Scala
-export SPARK_HOME='/usr/local/spark/spark-0.9.1'
-#export SBT_OPTS='-Xms512M -Xmx3072M -Xss256M -XX:+CMSClassUnloadingEnabled -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+CMSIncrementalMode  -XX:+UseConcMarkSweepGC -XX:PermSize=724M -XX:MaxPermSize=724M'
-export SBT_OPTS='-Xms512M -Xmx3072M -Xss256M -XX:+UseParNewGC -XX:+UseConcMarkSweepGC'
-
-# for PlayFramework
-alias a='activator'
-
-# for Python
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
+export PATH="${HOME}/.scalaenv/bin:${PATH}"
+eval "$(scalaenv init -)"
+unset SPARK_HOME
 
 # for peco
 alias o='vim $(git ls-files | peco)'
@@ -117,3 +120,18 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
+# for yosemite
+alias dns_clear='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+
+# restart docker
+alias dk_rm="docker ps -a | tail -1 | grep -v CONTAINER | cut -d' ' -f1 |xargs docker rm "
+alias dk_run="docker run -it -p 43210:22 -p 3000:3001 -p 8000:8001 -v `pwd`:/usr/local/recipe-repo centos:chef-sandbox"
+
+# Go
+export GOPATH=$HOME/dev/go
+export GOROOT=$(brew --prefix go)/libexec
+export PATH=$GOPATH/bin:$PATH
+
+# td-agent
+alias td-agent='sudo launchctl start td-agent'
