@@ -21,6 +21,7 @@ Plug 'JuliaLang/julia-vim'
 Plug 'fatih/vim-go'
 Plug 'joker1007/vim-markdown-quote-syntax'
 Plug 'modsound/macdict-vim'
+Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 filetype plugin indent on
