@@ -45,7 +45,7 @@ set ambiwidth=double
 
 "show invisibility mark
 set list
-set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
 "set listchars=eol:$,tab:>\ ,extends:<
 set colorcolumn=80
 
@@ -138,6 +138,7 @@ augroup END
 
 " for Go
 let g:go_fmt_command = "goimports"
+au FileType go setlocal sw=4 ts=4 sts=4 noet
 
 " set color for Indent Guides
 " indent-guides on
@@ -163,6 +164,10 @@ let g:syntastic_mode_map = {
             \ 'mode': 'active',
             \ 'passive_filetypes': ['python', 'ruby']
             \ }
+
+" golang
+let g:go_fmt_command = "goimports"
+au FileType go setl noexpandtab tabstop=4 shiftwidth=4
 
 " set lightline
 let g:lightline = {
