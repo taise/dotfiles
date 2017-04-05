@@ -21,6 +21,9 @@ Plug 'JuliaLang/julia-vim'
 Plug 'fatih/vim-go'
 Plug 'joker1007/vim-markdown-quote-syntax'
 Plug 'modsound/macdict-vim'
+
+Plug 'wakatime/vim-wakatime'
+Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 filetype plugin indent on
@@ -38,6 +41,7 @@ set hidden
 set fileencoding=utf-8
 set termencoding=utf-8
 set encoding=utf-8
+set ambiwidth=double
 
 "show invisibility mark
 set list
@@ -61,7 +65,6 @@ set whichwrap=b,s,h,l,<,>,[,]
 
 "decorate
 set number
-""set colorcolumn=80
 set showmatch
 set matchpairs& matchpairs+=<:>
 set cursorline
@@ -133,6 +136,8 @@ augroup UjihisaRSpec
   autocmd BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
 augroup END
 
+" for Go
+let g:go_fmt_command = "goimports"
 
 " set color for Indent Guides
 " indent-guides on
@@ -267,3 +272,17 @@ let g:tagbar_type_ruby = {
 
 nmap <C-_> :TagbarToggle<CR>
 nmap <C-p> :set paste<CR>
+
+" smart paste
+if &term =~ "xterm"
+    let &t_SI .= "\e[?2004h"
+    let &t_EI .= "\e[?2004l"
+    let &pastetoggle = "\e[201~"
+
+    function XTermPasteBegin(ret)
+        set paste
+        return a:ret
+    endfunction
+
+    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+endif
