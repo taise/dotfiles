@@ -1,0 +1,12 @@
+inoremap ¥ \
+inoremap \ ¥
+
+inoremap <C-c> <CR><CR><UP><TAB>
+
+nnoremap H ^
+nnoremap J }
+nnoremap K {
+nnoremap L $
+
+inoremap <C-e> <End>
+inoremap <C-d> <Del>

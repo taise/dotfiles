@@ -24,6 +24,9 @@ Plug 'modsound/macdict-vim'
 
 Plug 'wakatime/vim-wakatime'
 Plug 'leafgarland/typescript-vim'
+
+" tidal
+Plug 'munshkr/vim-tidal'
 call plug#end()
 
 filetype plugin indent on

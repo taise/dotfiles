@@ -6,9 +6,8 @@ ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="robbyrussell"
 #ZSH_THEME="agnoster"
 ZSH_THEME="cloud"
-TERM=xterm-256color
 
-DEFAULT_USER="taise"
+DEFAULT_USER="taise515@gmail.com"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -16,15 +15,11 @@ DEFAULT_USER="taise"
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
 
-LANG=en_US.UTF-8
-LC_CTYPE=en_US.UTF-8
-LC_ALL=en_US.UTF-8
-
 # Comment this out to disable bi-weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment to change how many often would you like to wait before auto-updates occur? (in days)
-UPDATE_ZSH_DAYS=3
+# export UPDATE_ZSH_DAYS=13
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
@@ -35,72 +30,92 @@ UPDATE_ZSH_DAYS=3
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-# For zsh-completions
-# fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=(/usr/local/share/zsh-completions $fpath)
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(rails ruby rake git emoji-clock zsh-syntax-highlighting docker aws
-         brew bundler gem golang pep8 pip python tmux vagrant)
+plugins=(rails ruby git zsh-syntax-highlighting zsh-notify docker golang zsh-wakatime)
+setopt nolistbeep
+export TERM=xterm-256color
 
+export LANG=en_US.UTF-8
 source $ZSH/oh-my-zsh.sh
-#if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-#  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#fi
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
-# git
-alias gmergedrm="git branch --merged | grep -v '*' | xargs -I % git branch -d %"
-export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
+
+# GPG key
+export GPG_TTY=$(tty)
 
 # for homebrew
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/sbin:$PATH
 
 # Customize to your needs...
 export LSCOLORS=gxfxcxdxbxegedabagacad
 alias ls='ls -G'
 alias today='mkdir `date +"%Y%m%d"`'
-alias todaymd='touch `date +"%Y%m%d.md"`'
+#export SCREENDIR="/Users/taise/.screen"
+alias vim='/usr/local/bin/vim'
+
+# notify
+REPORTTIME=3
+
+# Anyenv
+export PATH=$HOME/.anyenv/env/rbenv/bin:$PATH
+eval "$(rbenv init - zsh)"
+
+
+# for Perl
+export PLENV_ROOT=$HOME/.plenv
+export PATH=$PLENV_ROOT/bin:$PATH
+eval "$(plenv init -)"
 
 # for Ruby
-export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH=$HOME/.rbenv/bin:$PATH
 eval "$(rbenv init -)"
-
 alias r='rails'
 alias rspec='rspec --color'
-alias rspecf='rspec --color --format doc'
+alias bers='bundle exec rspec --color --format doc'
 alias be='bundle exec'
-alias bers='bundle exec rspec -c -f d'
 alias bi='bundle install'
 alias gi='gem install --no-ri --no-rdoc'
 
 # for MySQL
-export MYSQL=/usr/local/mysql/bin
-export PATH=$PATH:$MYSQL
+MYSQL=/usr/local/mysql/bin
+PATH=$PATH:$MYSQL
+
+# for Apache
+export PATH=/usr/local/Cellar/httpd/2.2.27/sbin:$PATH
 
 #for PostgreSQL
 export PGDATA=/usr/local/var/postgres
-alias ps_start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
-alias ps_stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
-alias ps_status='pg_ctl -D /usr/local/var/postgres status'
+alias pg_start='pg_ctl -D ${PGDATA} -l /usr/local/var/postgres/server.log start'
+alias pg_stop='pg_ctl -D ${PGDATA} stop -s -m fast'
+alias pg_status='pg_ctl -D ${PGDATA} status'
 
 #for JavaScript
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+export NODEBREW_ROOT=/usr/local/var/nodebrew
+export PATH=/usr/local/var/nodebrew/current/bin:$PATH
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
-# for Java
-alias java='/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java'
+#cat /Users/taise/Documents/todo.txt
 
-# for python
-export PATH="$HOME/.pyenv/shims:$PATH"
+# for Julia
+export PATH=$PATH:/Applications/Julia-0.3.0.app/Contents/Resources/julia/bin
+
+# for Python
+export PATH="$HOME/.anyenv/env/pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 
-# for perl
-# eval "$(plenv init -)"
+# for C++
+alias clang++14="clang++ -std=c++14 -pedantic -Wall"
 
-# for Scala
-export PATH="${HOME}/.scalaenv/bin:${PATH}"
-eval "$(scalaenv init -)"
-unset SPARK_HOME
+# for Go
+export GOPATH=$HOME/dev/go
+export PATH=$PATH:$GOPATH/bin
 
 # for peco
 alias o='vim $(git ls-files | peco)'
@@ -121,17 +136,13 @@ function peco-select-history() {
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 
-# for yosemite
-alias dns_clear='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+export PATH="$HOME/.embulk/bin:$PATH"
 
-# restart docker
-alias dk_rm="docker ps -a | tail -1 | grep -v CONTAINER | cut -d' ' -f1 |xargs docker rm "
-alias dk_run="docker run -it -p 43210:22 -p 3000:3001 -p 8000:8001 -v `pwd`:/usr/local/recipe-repo centos:chef-sandbox"
+# for Git
+alias gmergedrm="git branch --merged | grep -v '*' | xargs -I % git branch -d %"
 
-# Go
-export GOPATH=$HOME/dev/go
-export GOROOT=$(brew --prefix go)/libexec
-export PATH=$GOPATH/bin:$PATH
+# colorls
+alias lc='colorls'
 
-# td-agent
-alias td-agent='sudo launchctl start td-agent'
+
+alias memo="vim ~/Desktop/memo/`date '+%Y%m%d.md'`"
