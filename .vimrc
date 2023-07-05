@@ -16,17 +16,14 @@ Plug 'vim-scripts/javacomplete'
 Plug 'derekwyatt/vim-scala'
 Plug 'jiangmiao/simple-javascript-indenter'
 Plug 'jelera/vim-javascript-syntax'
-Plug 'kchmck/vim-coffee-script'
-Plug 'JuliaLang/julia-vim'
 Plug 'fatih/vim-go'
 Plug 'joker1007/vim-markdown-quote-syntax'
 Plug 'modsound/macdict-vim'
+Plug 'cespare/vim-toml'
+Plug 'hashivim/vim-terraform'
 
 Plug 'wakatime/vim-wakatime'
 Plug 'leafgarland/typescript-vim'
-
-" tidal
-Plug 'munshkr/vim-tidal'
 call plug#end()
 
 filetype plugin indent on
@@ -50,7 +47,7 @@ set ambiwidth=double
 set list
 set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
 "set listchars=eol:$,tab:>\ ,extends:<
-set colorcolumn=80
+set colorcolumn=120
 
 "syntax hilight
 set background=dark
@@ -162,11 +159,15 @@ command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | d
 
 " SyntasticCheck
 let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-let g:syntastic_mode_map = {
-            \ 'mode': 'active',
-            \ 'passive_filetypes': ['python', 'ruby']
-            \ }
+let g:syntastic_python_checkers = ['pyflakes', 'pycodestyle']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " golang
 let g:go_fmt_command = "goimports"
